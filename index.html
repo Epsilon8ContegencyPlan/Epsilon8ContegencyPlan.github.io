@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Discord Embed Meta Tags -->
+    <meta property="og:title" content="Epsilon-8 - Operation Blackwater" />
+    <meta property="og:description" content="You have until July 1st. The Epsilon-8_Plan.zip will be deployed. Hell False Kick Contingency active.... It was all your fault" />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#ff0000" />
+
+    <!-- Twitter Card (Optional) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Epsilon-8 - Operation Blackwater" />
+    <meta name="twitter:description" content="Hell False Kick Contingency Plan is now active. You have until July 1st." />
+    <meta name="twitter:image" content="https://epsilon8contegencyplan.github.io/preview.jpg" />
+
+  <title>Epsilon-8 - Operation Blackwater</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: black;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    /* Pulsing red to orange text effect */
+    .pulsing-text {
+      animation: pulseColor 2s infinite alternate;
+    }
+
+    @keyframes pulseColor {
+      0% {
+        color: red;
+      }
+      100% {
+        color: orange;
+      }
+    }
+
+    #fadeWrapper {
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+
+    .visible {
+      opacity: 1 !important;
+    }
+
+    #startText {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2em;
+      cursor: pointer;
+      text-align: center;
+      text-shadow: 0 0 10px red;
+      z-index: 9999;
+    }
+
+    h1 {
+      font-size: 4em;
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .red-bar {
+      background-color: red;
+      height: 10px;
+      width: 100%;
+      margin-bottom: 30px;
+    }
+
+    .countdown {
+      font-size: 4em;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .secondary-text {
+      font-size: 2em;
+      text-align: center;
+    }
+
+    .bottom-text {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 1.2em;
+    }
+
+    .popup {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 400px;
+      transform: translate(-50%, -50%);
+      background-color: #111;
+      border: 2px solid red;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: left;
+      box-shadow: 0 0 20px red;
+    }
+
+    .popup-title {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+
+    .popup-details {
+      font-size: 1em;
+      margin-bottom: 15px;
+    }
+
+    .progress-container {
+      width: 100%;
+      background-color: #222;
+      border: 1px solid red;
+      border-radius: 5px;
+      overflow: hidden;
+      height: 20px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: red;
+      width: 0%;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="startText" class="pulsing-text" onclick="initializePage()">Click to Initialize Operation Blackwater</div>
+
+  <div id="fadeWrapper">
+    <h1 class="pulsing-text">Epsilon-8 - Operation Blackwater</h1>
+    <div class="red-bar"></div>
+    <div class="countdown pulsing-text" id="countdown"></div>
+    <div class="secondary-text pulsing-text">Hell False Kick Contingency Plan</div>
+
+    <div class="popup">
+      <div class="popup-title pulsing-text">Epsilon-8.zip</div>
+      <div class="popup-details pulsing-text">Size: 278 MB (500 MB uncompressed)</div>
+      <div class="popup-details pulsing-text">Going to Mov, Cubester, Garbomuffin, And Authorities at 7/1/25</div>
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="bottom-text pulsing-text">
+      You Have until 7/1/25 until Epsilon-8 Zip file will be sent to Turbowarp Moderators.<br/>
+      All quotes that contain stuff about "Bomb Threats" will be sent to Authorities.
+    </div>
+  </div>
+
+  <audio id="alarmAudio" loop>
+    <source src="https://epsilon8contegencyplan.github.io/alarm.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function initializePage() {
+      const audio = document.getElementById("alarmAudio");
+      audio.play().catch(err => console.warn("Audio play blocked:", err));
+
+      document.getElementById("fadeWrapper").classList.add("visible");
+
+      const startText = document.getElementById("startText");
+      startText.style.transition = "opacity 1s ease";
+      startText.style.opacity = "0";
+      setTimeout(() => startText.style.display = "none", 1000);
+    }
+
+    const countdownEl = document.getElementById("countdown");
+    const progressBar = document.getElementById("progressBar");
+    const targetDate = new Date("July 1, 2025 00:00:00").getTime();
+    const startDate = new Date("June 25, 2025 00:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        countdownEl.textContent = "00d 00h 00m 00s 000ms";
+        progressBar.style.width = "100%";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      const milliseconds = distance % 1000;
+
+      countdownEl.textContent =
+        `${String(days).padStart(2, '0')}d ` +
+        `${String(hours).padStart(2, '0')}h ` +
+        `${String(minutes).padStart(2, '0')}m ` +
+        `${String(seconds).padStart(2, '0')}s ` +
+        `${String(milliseconds).padStart(3, '0')}ms`;
+
+      const totalTime = targetDate - startDate;
+      const elapsed = now - startDate;
+      const progress = Math.min(Math.max(elapsed / totalTime, 0), 1) * 100;
+      progressBar.style.width = `${progress.toFixed(2)}%`;
+    }
+
+    setInterval(updateCountdown, 30);
+  </script>
+</body>
+</html>
